@@ -16,7 +16,7 @@ A minimal macOS menu bar app that lets you control system volume by scrolling ov
 
 ### One-liner (recommended)
 ```bash
-curl -sL https://raw.githubusercontent.com/sujooff/VolumeScroll/main/install.sh | bash
+curl -sL https://raw.githubusercontent.com/sujoff/VolumeScroll/main/install.sh | bash
 ```
 
 ### Manual
