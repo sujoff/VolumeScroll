@@ -22,6 +22,8 @@ Open Terminal
 curl -sL https://raw.githubusercontent.com/sujoff/VolumeScroll/main/install.sh | bash
 ```
 
+Ignore x-code related warning unless its an error, app will be installed and visible in menu bar now. Enjoy !!
+
 ### Manual
 1. Clone or download this repo
 2. Run:
