@@ -6,6 +6,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var currentVolume: Float = 0.5
     var globalMonitor: Any?
     var localMonitor: Any?
+    var volumeSyncTimer: Timer?
     var lastScrollTime: TimeInterval = 0
     var popover: NSPopover?
     var sliderController: SliderViewController?
@@ -43,6 +44,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         currentVolume = getVolume()
         updateLabel()
+        startVolumeSync()
 
         localMonitor = NSEvent.addLocalMonitorForEvents(matching: .scrollWheel) { [weak self] event in
             self?.handleScroll(event)
@@ -225,6 +227,24 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     // MARK: - Audio
 
+    func startVolumeSync() {
+        volumeSyncTimer?.invalidate()
+        volumeSyncTimer = Timer.scheduledTimer(withTimeInterval: 0.25, repeats: true) { [weak self] _ in
+            self?.syncVolumeFromSystemIfNeeded()
+        }
+        if let timer = volumeSyncTimer {
+            RunLoop.main.add(timer, forMode: .common)
+        }
+    }
+
+    func syncVolumeFromSystemIfNeeded() {
+        let systemVolume = getVolume()
+        guard abs(systemVolume - currentVolume) > 0.01 else { return }
+        currentVolume = systemVolume
+        updateLabel()
+        sliderController?.volume = systemVolume
+    }
+
     func getVolume() -> Float {
         let script = NSAppleScript(source: "output volume of (get volume settings)")!
         var error: NSDictionary?
@@ -240,6 +260,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationWillTerminate(_ notification: Notification) {
+        volumeSyncTimer?.invalidate()
+        volumeSyncTimer = nil
         if let m = globalMonitor { NSEvent.removeMonitor(m) }
         if let m = localMonitor { NSEvent.removeMonitor(m) }
     }
