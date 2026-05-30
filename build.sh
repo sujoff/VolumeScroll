@@ -20,3 +20,4 @@ cp Info.plist "$CONTENTS/Info.plist"
 
 echo "✅ Built: VolumeScroll.app"
 echo "Run: open VolumeScroll.app"
+ech  "Feel free to raise issue in github if any trouble!! "
