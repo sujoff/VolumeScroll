@@ -1,6 +1,13 @@
 #!/bin/bash
 set -e
 
+REPO="sujoff/VolumeScroll"
+RAW="https://raw.githubusercontent.com/$REPO/main"
+APP_NAME="VolumeScroll.app"
+INSTALL_DIR="/Applications"
+APP_PATH="$INSTALL_DIR/$APP_NAME"
+TMP_DIR=$(mktemp -d)
+
 echo ""
 echo "  VolumeScroll Installer"
 echo "  ──────────────────────"
@@ -16,34 +23,27 @@ if ! command -v swiftc &> /dev/null; then
     exit 1
 fi
 
-APP_NAME="VolumeScroll.app"
-INSTALL_DIR="/Applications"
-APP_PATH="$INSTALL_DIR/$APP_NAME"
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+echo "  ⬇️  Downloading source..."
+curl -sL "$RAW/AppDelegate.swift" -o "$TMP_DIR/AppDelegate.swift"
+curl -sL "$RAW/main.swift"        -o "$TMP_DIR/main.swift"
+curl -sL "$RAW/Info.plist"        -o "$TMP_DIR/Info.plist"
 
 echo "  🔨 Building..."
-
-# Build
+cd "$TMP_DIR"
 mkdir -p "$APP_NAME/Contents/MacOS" "$APP_NAME/Contents/Resources"
 
-swiftc "$SCRIPT_DIR/AppDelegate.swift" "$SCRIPT_DIR/main.swift" \
+swiftc AppDelegate.swift main.swift \
     -framework Cocoa \
     -framework CoreAudio \
     -framework ServiceManagement \
     -o "$APP_NAME/Contents/MacOS/VolumeScroll" \
-    -target arm64-apple-macos13.0 2>&1
+    -target arm64-apple-macos13.0
 
-cp "$SCRIPT_DIR/Info.plist" "$APP_NAME/Contents/Info.plist"
+cp Info.plist "$APP_NAME/Contents/Info.plist"
 
 echo "  📦 Installing to /Applications..."
-
-# Remove old version if exists
-if [ -d "$APP_PATH" ]; then
-    rm -rf "$APP_PATH"
-fi
-
+rm -rf "$APP_PATH"
 cp -r "$APP_NAME" "$INSTALL_DIR/"
-rm -rf "$APP_NAME"
 
 echo "  ✅ Done! Launching VolumeScroll..."
 echo ""
@@ -53,3 +53,4 @@ echo "     and enable VolumeScroll."
 echo ""
 
 open "$APP_PATH"
+rm -rf "$TMP_DIR"
