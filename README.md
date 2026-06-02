@@ -4,13 +4,22 @@ A minimal macOS menu bar app that lets you control system volume by scrolling ov
 
 ![macOS 13+](https://img.shields.io/badge/macOS-13%2B-blue) ![Apple Silicon](https://img.shields.io/badge/Apple%20Silicon-supported-green) ![Free](https://img.shields.io/badge/price-free-brightgreen)
 
+
 ## Features
 
-- **Scroll** over the menu bar icon to adjust volume (3% per step)
+- **Scroll** over the menu bar icon to adjust volume (3% per step) ; **works perfectly with extenal mouse**
 - **Click** the icon for a slider popover
 - **Right-click** to mute/unmute, toggle launch at login, or quit
 - Minimal — no Dock icon, no background processes beyond what's needed
 - Free, no subscriptions, no App Store
+
+
+## Preview 
+ß
+
+<p align="center">
+  <img src="preview.gif" width="800" alt="preview">
+</p>
 
 ## Install
 

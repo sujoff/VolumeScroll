@@ -9,7 +9,7 @@ APP_PATH="$INSTALL_DIR/$APP_NAME"
 TMP_DIR=$(mktemp -d)
 
 echo ""
-echo "  VolumeScroll Installer"
+echo "  VolumeScroller Installer"
 echo "  ──────────────────────"
 echo ""
 
