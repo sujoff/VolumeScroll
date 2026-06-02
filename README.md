@@ -1,4 +1,4 @@
-# 🔊 VolumeScroll
+# 🔊 VolumeScroller
 
 A minimal macOS menu bar app that lets you control system volume by scrolling over the icon — the way it should have always worked.
 
