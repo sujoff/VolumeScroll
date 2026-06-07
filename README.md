@@ -15,7 +15,6 @@ A minimal macOS menu bar app that lets you control system volume by scrolling ov
 
 
 ## Preview 
-ß
 
 <p align="center">
   <img src="preview.gif" width="800" alt="preview">
